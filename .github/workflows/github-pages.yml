@@ -11,7 +11,9 @@ jobs:
     permissions:
       contents: write
     concurrency:
-      group: ${{ github.workflow }}-${{ github.ref }}
+      # Every release updates the same gh-pages branch, so serialize deployments
+      # across tags instead of allowing each tag to deploy concurrently.
+      group: ${{ github.workflow }}
     defaults:
       run:
         working-directory: ./nav-app/
